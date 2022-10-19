@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
@@ -7,8 +8,14 @@ public class PlayerStats : MonoBehaviour
     public static PlayerStats Instance;
 
     [SerializeField] private GameObject[] hearts;
+    [SerializeField] private float invincibilityFrameTime;
+    [SerializeField] private float timeBetweenInvincibilityFrames;
+    [SerializeField] private SpriteRenderer spriteR;
     private int maxHealth = 3;
     private int currentHealth;
+    private bool invincibility;
+    private Cooldowns invincibilityCooldown;
+    private Cooldowns invincibilityFrames;
 
     private void Awake()
     {
@@ -20,12 +27,45 @@ public class PlayerStats : MonoBehaviour
         Instance = this;
         currentHealth = maxHealth;
         UpdateHealthBar();
+        invincibilityCooldown = new Cooldowns(invincibilityFrameTime);
+        invincibilityFrames = new Cooldowns(timeBetweenInvincibilityFrames);
+    }
+
+    private void Update()
+    {
+        invincibilityCooldown.DecreaseCD(Time.deltaTime);
+        invincibilityFrames.DecreaseCD(Time.deltaTime);
+        if (invincibility)
+        {
+            if (invincibilityCooldown.isFinished)
+            {
+                EnableInvincibility(false);
+            }
+            else if (invincibilityFrames.isFinished)
+            {
+                spriteR.enabled = !spriteR.enabled;
+                invincibilityFrames.ResetCD();
+            }
+        }
+    }
+
+    private void EnableInvincibility(bool enable)
+    {
+        if (enable)
+        {
+            invincibilityCooldown.ResetCD();
+            invincibilityFrames.ResetCD();
+        }
+        invincibility = enable;
+        spriteR.enabled = !enable;
     }
 
     public void TakeDamage(int damage = 1)
     {
+        if (invincibility) return;
         currentHealth -= damage;
         UpdateHealthBar();
+        EnableInvincibility(true);
         if (currentHealth <= 0)
         {
             Death();
