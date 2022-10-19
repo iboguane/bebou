@@ -1,36 +1,62 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
     private PlayerInputs playerInputs;
-    private InputAction Movement;
+    private InputAction movement;
+    private InputAction dash;
+    private Vector3 velocity = Vector3.zero;
+    private Cooldowns cdDash;
 
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private Image dashImage;
     [SerializeField] private float movementSpeed;
+    [SerializeField] private float dashForce;
+    [SerializeField] private float dashCooldown;
 
     private void Awake()
     {
         playerInputs = new();
+        cdDash = new Cooldowns(dashCooldown);
     }
 
     private void OnEnable()
     {
-        Movement = playerInputs.Player.Movement;
-        Movement?.Enable();
+        movement = playerInputs.Player.Movement;
+        movement?.Enable();
+        dash = playerInputs.Player.Dash;
+        dash?.Enable();
+        dash.performed += OnDash;
     }
 
     private void OnDisable()
     {
-        Movement?.Disable();
+        movement?.Disable();
+        dash?.Disable();
     }
 
     private void FixedUpdate()
     {
-        rb.velocity = Movement.ReadValue<Vector2>() * movementSpeed * Time.fixedDeltaTime;
+        Vector2 targetVelocity = movement.ReadValue<Vector2>() * movementSpeed * Time.fixedDeltaTime;
+        rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, .05f);
+        cdDash.DecreaseCD(Time.fixedDeltaTime);
+        UpdateDashCD();
     }
 
+    private void UpdateDashCD()
+    {
+        if (cdDash.isFinished && dashImage.fillAmount == 1) return;
+        dashImage.fillAmount = 1 - (cdDash.currentCD / dashCooldown);
+    }
+
+    private void OnDash(InputAction.CallbackContext ctx) => Dash();
+
+    private void Dash()
+    {
+        if (!cdDash.isFinished) return;
+        cdDash.ResetCD();
+        rb.AddForce(movement.ReadValue<Vector2>() * dashForce, ForceMode2D.Impulse);
+    }
 }
