@@ -10,16 +10,35 @@ public class Arena : MonoBehaviour
     public Transform BasDroit;
     public GameObject ennemi;
     public GameObject Bullet;
+    public GameObject Lala;
+    private GameObject ennemyRef;
+    private int ran;
     // Start is called before the first frame update
     void Start()
     {
-        Instantiate(ennemi, SpawnMechant(HautGauche,HautDroit), Quaternion.identity);
+        //Instantiate(ennemi, SpawnMechant(HautGauche,HautDroit), Quaternion.identity);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        ran = Random.Range(0, 4);
+        if (ran == 0){
+            ennemyRef = Instantiate(ennemi, SpawnMechant(HautGauche, HautDroit), Quaternion.identity);
+        }
+        if (ran == 1)
+        {
+            ennemyRef = Instantiate(ennemi, SpawnMechant(HautGauche, BasGauche), Quaternion.identity);
+        }
+        if (ran == 2)
+        {
+            ennemyRef = Instantiate(ennemi, SpawnMechant(BasDroit, BasGauche), Quaternion.identity);
+        }
+        if (ran == 3)
+        {
+            ennemyRef = Instantiate(ennemi, SpawnMechant(BasDroit, HautDroit), Quaternion.identity);
+        }
+        Instantiate(Lala, ennemyRef.transform.position, Quaternion.identity);
     }
 
 //renvoie le Vector3 d'un point entre les deux transform donné

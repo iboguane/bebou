@@ -325,6 +325,8 @@ MonoBehaviour:
   BasGauche: {fileID: 1367850754}
   BasDroit: {fileID: 1809476056}
   ennemi: {fileID: 3728454707211930677, guid: 08e1b8c40036c6e45b57c53d4aa7154c, type: 3}
+  Bullet: {fileID: 2748087592429430862, guid: 6ddc4f1ae5885174e93fb24355e9dd3b, type: 3}
+  Lala: {fileID: 7524647148056639668, guid: 6dbcceaf95d89e946b3a0b139e123096, type: 3}
 --- !u!4 &1164284236
 Transform:
   m_ObjectHideFlags: 0
@@ -342,7 +344,7 @@ Transform:
   - {fileID: 1809476056}
   - {fileID: 1918581858}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1367850753
 GameObject:
@@ -528,12 +530,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1788901147}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.98, y: -0.67, z: 0}
+  m_LocalPosition: {x: -3.6, y: -1.83, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1788901152
 BoxCollider2D:
@@ -746,7 +748,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2748087592429430866, guid: 6ddc4f1ae5885174e93fb24355e9dd3b, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2748087592429430866, guid: 6ddc4f1ae5885174e93fb24355e9dd3b, type: 3}
       propertyPath: m_LocalPosition.x
