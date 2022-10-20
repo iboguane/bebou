@@ -147,5 +147,5 @@ MonoBehaviour:
   player: {x: 0, y: 0, z: 0}
   lr: {fileID: 7524647148056639666}
   LaserPrefab: {fileID: 7013553220565006005, guid: a2929d4f65b786e4ba99c5df87988cda, type: 3}
-  TempReaction: 2
+  TempReaction: 1
   ancre: {fileID: 0}

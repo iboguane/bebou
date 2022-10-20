@@ -28,11 +28,6 @@ y3 = r* y2 + (1 - r) * y1 #into the ratio (1-r):r
     StartCoroutine(Bzzt());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
     IEnumerator Bzzt()
     {
         yield return new WaitForSeconds(TempReaction);

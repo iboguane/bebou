@@ -329,6 +329,7 @@ MonoBehaviour:
   Ennemis:
   - {fileID: 4597924184158043405, guid: 4116e10b475330a48b95ab2a60543a41, type: 3}
   - {fileID: 946647627677180140, guid: fdd91122652e152479d574d795536964, type: 3}
+  - {fileID: 3981407154225301067, guid: d86be913b07ef6749b7f14452dd60198, type: 3}
 --- !u!4 &1164284236
 Transform:
   m_ObjectHideFlags: 0

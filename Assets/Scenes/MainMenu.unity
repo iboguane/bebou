@@ -251,4 +251,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3057878221a8794eba3c042cfc19d0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  otherScene: 
+  otherScene: MainScene
