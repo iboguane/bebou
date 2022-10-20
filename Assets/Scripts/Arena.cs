@@ -14,7 +14,7 @@ public class Arena : MonoBehaviour
     private GameObject ennemyRef;
     private int ran;
     private int ranEnnemy;
-    private 
+    private int IntervalSpawn =1;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,7 +38,7 @@ public class Arena : MonoBehaviour
         {
             ran = Random.Range(0, 4);
             //ranEnnemy = Random.Range(0, Ennemis.Length);
-            ranEnnemy = Random.Range(0, 1);
+            ranEnnemy = Random.Range(0, 3);
             if (ran == 0)
             {
                 ennemyRef = Instantiate(Ennemis[ranEnnemy], SpawnMechant(HautGauche, HautDroit), Quaternion.identity);
@@ -55,7 +55,7 @@ public class Arena : MonoBehaviour
             {
                 ennemyRef = Instantiate(Ennemis[ranEnnemy], SpawnMechant(BasDroit, HautDroit), Quaternion.identity);
             }
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(IntervalSpawn);
         }
     }
 }
