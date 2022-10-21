@@ -10,12 +10,15 @@ public class Bullet : MonoBehaviour
     private float d;
     public float troploin;
     public float TempsAttAvantAtk;
+    public static float TempsAttAvantAtkStatic;
     private bool Cd = false;
     // Start is called before the first frame update
     void Start()
     {
+        TempsAttAvantAtkStatic = TempsAttAvantAtk;
         StartCoroutine(TueBullet());
         StartCoroutine(Attaque());
+
     }
 
     // Update is called once per frame
@@ -54,5 +57,12 @@ y3 = r* y2 + (1 - r) * y1 #into the ratio (1-r):r
         d = Mathf.Pow((this.gameObject.transform.position.x - player.x), 2) + Mathf.Pow((this.gameObject.transform.position.y - player.y), 2);
         behindplayer = new Vector3(900 / d * player.x + (1 - 900 / d) * this.gameObject.transform.position.x, 900 / d * player.y + (1 - 900 / d) * this.gameObject.transform.position.y, 0);
         Cd = true;
+        Vector3 difference = player - this.transform.position;
+        float rotationZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
+        this.transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ + 180);
+        if (this.name.Contains("Bullet"))
+        {
+            this.transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ + 90);
+        }
     }
 }
