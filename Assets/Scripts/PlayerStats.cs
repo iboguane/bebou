@@ -11,9 +11,8 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private float invincibilityFrameTime;
     [SerializeField] private float timeBetweenInvincibilityFrames;
     [SerializeField] private SpriteRenderer spriteR;
-    [SerializeField] private MenuManager menuManager;
     private int maxHealth = 3;
-    [HideInInspector] public int currentHealth;
+    private int currentHealth;
     private bool invincibility;
     private Cooldowns invincibilityCooldown;
     private Cooldowns invincibilityFrames;
@@ -75,12 +74,7 @@ public class PlayerStats : MonoBehaviour
 
     private void Death()
     {
-        menuManager.DeathMenu();
-    }
-
-    public void Pause()
-    {
-        menuManager.PauseMenu();
+        //Death Behaviour
     }
 
     private void UpdateHealthBar()
