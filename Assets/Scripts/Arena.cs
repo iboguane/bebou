@@ -8,8 +8,6 @@ public class Arena : MonoBehaviour
     public Transform HautDroit;
     public Transform BasGauche;
     public Transform BasDroit;
-    public GameObject ennemi;
-    public GameObject Bullet;
     public GameObject[] Ennemis;
     private GameObject ennemyRef;
     private int ran;

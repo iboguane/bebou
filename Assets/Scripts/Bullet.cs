@@ -26,7 +26,7 @@ public class Bullet : MonoBehaviour
         }
     }
     void OnTriggerEnter2D(Collider2D col){
-        //PlayerStats.Instance.TakeDamage();
+        PlayerStats.Instance.TakeDamage();
         if (col.tag == "Player" && this.gameObject.tag != "Bear")
         {
             Destroy(gameObject);
