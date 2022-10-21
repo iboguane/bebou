@@ -62,7 +62,12 @@ y3 = r* y2 + (1 - r) * y1 #into the ratio (1-r):r
         this.transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ + 180);
         if (this.name.Contains("Bullet"))
         {
+            AudioManager.instance.PlayClip("Pew");
             this.transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ + 90);
+        }
+        else
+        {
+            AudioManager.instance.PlayClip("Bear");
         }
     }
 }
