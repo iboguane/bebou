@@ -30,6 +30,7 @@ y3 = r* y2 + (1 - r) * y1 #into the ratio (1-r):r
 
     IEnumerator Bzzt()
     {
+        AudioManager.instance.PlayClip("Laser");
         yield return new WaitForSeconds(TempReaction);
         GameObject laser = Instantiate(LaserPrefab, this.gameObject.transform.position, Quaternion.identity);
         laser.transform.parent = gameObject.transform;

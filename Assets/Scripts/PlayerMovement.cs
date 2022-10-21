@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Image dashImage;
+    [SerializeField] private Transform spriteR;
     [SerializeField] private float movementSpeed;
     [SerializeField] private float dashForce;
     [SerializeField] private float dashCooldown;
@@ -42,7 +43,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector2 targetVelocity = movement.ReadValue<Vector2>() * movementSpeed * Time.fixedDeltaTime;
+        Vector2 direction = movement.ReadValue<Vector2>();
+        if (direction != Vector2.zero)
+        {
+            spriteR.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 180);
+        }
+        Vector2 targetVelocity = direction * movementSpeed * Time.fixedDeltaTime;
         rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, .05f);
         cdDash.DecreaseCD(Time.fixedDeltaTime);
         UpdateDashCD();
@@ -62,6 +68,7 @@ public class PlayerMovement : MonoBehaviour
 
         _onDash.Invoke();
         cdDash.ResetCD();
+        AudioManager.instance.PlayClip("Dash");
         rb.AddForce(movement.ReadValue<Vector2>() * dashForce, ForceMode2D.Impulse);
     }
 }
