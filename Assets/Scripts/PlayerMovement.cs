@@ -63,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!cdDash.isFinished) return;
         cdDash.ResetCD();
+        AudioManager.instance.PlayClip("Dash");
         rb.AddForce(movement.ReadValue<Vector2>() * dashForce, ForceMode2D.Impulse);
     }
 }
