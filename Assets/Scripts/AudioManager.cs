@@ -38,14 +38,7 @@ public class AudioManager : MonoBehaviour
             s.source = gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
             s.source.pitch = s.pitch;
-            if (s.soundtrack)
-            {
-                s.source.volume = 0;
-            }
-            else
-            {
-                s.source.volume = s.volume;
-            }
+            s.source.volume = s.volume;
             s.source.outputAudioMixerGroup = audioMixerGroup;
         }
     }
@@ -80,9 +73,6 @@ public class Sounds
     public float volume;
     [Range(.1f, 3f)]
     public float pitch;
-
-    public bool soundtrack;
-    public string nextSoundName;
 
     [HideInInspector]
     public AudioSource source;
