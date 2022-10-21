@@ -1,21 +1,27 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
 
 public class PlayerMovement : MonoBehaviour
 {
     private PlayerInputs playerInputs;
     private InputAction movement;
     private InputAction dash;
+    private InputAction pause;
+    private InputAction anyKey;
     private Vector3 velocity = Vector3.zero;
     private Cooldowns cdDash;
 
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private MenuManager menuManager;
     [SerializeField] private Image dashImage;
     [SerializeField] private Transform spriteR;
     [SerializeField] private float movementSpeed;
     [SerializeField] private float dashForce;
     [SerializeField] private float dashCooldown;
+
+    [SerializeField] UnityEvent _onDash;
 
     private void Awake()
     {
@@ -30,6 +36,12 @@ public class PlayerMovement : MonoBehaviour
         dash = playerInputs.Player.Dash;
         dash?.Enable();
         dash.performed += OnDash;
+        pause = playerInputs.Player.Pause;
+        pause?.Enable();
+        pause.performed += OnPause;
+        anyKey = playerInputs.Player.Restart;
+        anyKey?.Enable();
+        anyKey.performed += OnRestart;
     }
 
     private void OnDisable()
@@ -62,8 +74,20 @@ public class PlayerMovement : MonoBehaviour
     private void Dash()
     {
         if (!cdDash.isFinished) return;
+
+        _onDash.Invoke();
         cdDash.ResetCD();
         AudioManager.instance.PlayClip("Dash");
         rb.AddForce(movement.ReadValue<Vector2>() * dashForce, ForceMode2D.Impulse);
     }
+
+    private void OnPause(InputAction.CallbackContext ctx) => PlayerStats.Instance.Pause();
+
+    private void OnRestart(InputAction.CallbackContext ctx) 
+    {
+        if (PlayerStats.Instance.currentHealth <= 0)
+        {
+            menuManager.GoToScene();
+        }
+    } 
 }
