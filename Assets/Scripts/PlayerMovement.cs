@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float movementSpeed;
     [SerializeField] private float dashForce;
     [SerializeField] private float dashCooldown;
+
+    [SerializeField] UnityEvent _onDash;
 
     private void Awake()
     {
@@ -71,6 +74,8 @@ public class PlayerMovement : MonoBehaviour
     private void Dash()
     {
         if (!cdDash.isFinished) return;
+
+        _onDash.Invoke();
         cdDash.ResetCD();
         AudioManager.instance.PlayClip("Dash");
         rb.AddForce(movement.ReadValue<Vector2>() * dashForce, ForceMode2D.Impulse);
